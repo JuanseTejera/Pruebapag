@@ -9,173 +9,172 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" />
 
-    <style>
-      :root {
-        /* CAMBIO: Paleta de colores renovada */
-        --primary-dark: #1A2533; /* Azul naval oscuro */
-        --primary-hover: #2a3f54; /* Un tono más claro para hover */
-        --accent-color: #00A896; /* Verde azulado para acentos */
-        --accent-hover: #007F70;
-        --text-light: #F0F4F8;
-        --text-dark: #222222;
-        --card-bg: rgba(255, 255, 255, 0.98);
-        --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      }
+<style>
+  :root {
+    --primary-dark: #1A2533;
+    --primary-hover: #2a3f54;
+    --accent-color: #00A896;
+    --accent-hover: #007F70;
+    --text-light: #F0F4F8;
+    --text-dark: #222222;
+    --card-bg: rgba(255, 255, 255, 0.98);
+    --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
 
-      body {
-        font-family: var(--font-main);
-        background-image: url("BackgroundImg.png");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        min-height: 100vh;
-        margin: 0;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-      }
+  body {
+    font-family: var(--font-main);
+    background: url("BackgroundImg.png") no-repeat center/cover fixed;
+    min-height: 100vh;
+    margin: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
 
-      body::before {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.55); /* Un poco más oscuro */
-        z-index: -1;
-      }
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.55);
+    z-index: -1;
+  }
 
-      #navbar {
-        position: fixed;
-        width: 100%;
-        top: 0;
-        left: 0;
-        z-index: 1030;
-        transition: background-color 0.4s ease-in-out;
-        background-color: transparent;
-      }
+  #navbar {
+    position: fixed;
+    width: 100%;
+    top: 0; left: 0;
+    z-index: 1030;
+    transition: background-color 0.4s ease-in-out;
+    background-color: transparent;
+  }
 
-      #navbar.scrolled {
-        background-color: var(--primary-dark);
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-      }
-      
-      .navbar-brand, .nav-link {
-        text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-      }
-      
-      .logo-nav { margin-right: 10px; border-radius: 8px; }
-      .nav-item a { transition: transform 0.2s ease-in-out, color 0.2s ease; color: rgba(255, 255, 255, 0.9); }
-      .nav-item a:hover, .nav-link.active { transform: scale(1.1); color: var(--text-light) !important; text-shadow: 0 0 5px rgba(255,255,255,0.5); }
+  #navbar.scrolled {
+    background-color: var(--primary-dark);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .navbar-brand, .nav-link { text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
+  .logo-nav { margin-right: 10px; border-radius: 8px; }
+  .nav-item a { color: rgba(255, 255, 255, 0.9); transition: transform 0.2s ease-in-out, color 0.2s ease; }
+  .nav-item a:hover, .nav-link.active { transform: scale(1.1); color: var(--text-light) !important; text-shadow: 0 0 5px rgba(255,255,255,0.5); }
 
-      .main-content {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        color: var(--text-light);
-        text-align: center;
-        padding-top: 56px;
-      }
+  .main-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    color: var(--text-light);
+    text-align: center;
+    padding-top: 56px;
+  }
+  
+  .bienvenida h1, .bienvenida p, .product-section h1 { text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8); }
+  .bienvenida h1 { font-size: 3.5rem; font-weight: bold; }
+  
+  .product-section { padding: 80px 0; position: relative; z-index: 1; }
+  .product-section h1 { color: var(--text-light); }
+  .product-section.bg-light h1 { color: var(--text-dark); text-shadow: none; }
+  
+  /* --- Animaciones de entrada --- */
+  .welcome-text, .card { opacity: 0; }
+  .welcome-text { transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+  .card { transform: translateY(30px); }
+  .welcome-text.visible, .card.visible { opacity: 1; transform: translateY(0); }
+  /* --- Fin Animaciones --- */
 
-      .bienvenida h1, .bienvenida p, .product-section h1 {
-        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
-      }
-      
-      .product-section h1 { color: var(--text-light); }
-      .product-section.bg-light h1 { color: var(--text-dark); text-shadow: none; }
-      .bienvenida h1 { font-size: 3.5rem; font-weight: bold; }
+  .splide__slide { padding: 10px; }
+  .card {
+    background-color: var(--card-bg);
+    border: none;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out, box-shadow 0.3s ease;
+    border-radius: 1rem;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover { transform: translateY(-8px); box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25); }
+  .card-img-top { height: 200px; object-fit: contain; padding: 10px; background-color: #fff; cursor: pointer; }
+  .card-body { padding: 1.25rem; text-align: center; display: flex; flex-direction: column; flex-grow: 1; }
+  .card-title { font-weight: bold; min-height: 48px; cursor: pointer; }
+  .card-text-price { font-size: 1.2rem; font-weight: 600; color: var(--primary-dark); margin-top: auto; padding-top: 1rem; }
+  
+  .card-action-buttons { margin-top: 1rem; }
+  .add-to-cart-btn {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+  .add-to-cart-btn:hover {
+    background-color: var(--accent-hover);
+    border-color: var(--accent-hover);
+  }
+  
+  .splide__arrow { background: var(--primary-dark); opacity: 0.8; }
+  .splide__arrow svg { fill: var(--text-light); }
+  .splide__arrow:hover { background: var(--primary-hover); opacity: 1; }
+  .splide__pagination__page.is-active { background: var(--primary-dark); }
+  
+  .modal-body .carousel-item img { max-height: 450px; object-fit: contain; margin: auto; }
+  #modal-product-details { padding: 1rem; }
+  #modal-product-details p { font-size: 1.1rem; margin-bottom: 0.5rem; }
+  #modal-product-price { font-size: 1.5rem; font-weight: bold; color: var(--primary-dark); text-align: center; margin: 1rem 0; }
+  .modal-footer { justify-content: center; border-top: none; padding-top: 0; }
+  .modal-footer .btn { min-width: 200px; font-size: 1.1rem; }
 
-      .welcome-text { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
-      .welcome-text.visible { opacity: 1; transform: translateY(0); }
+  #topBtn {
+    position: fixed;
+    bottom: 30px; right: 30px;
+    background-color: var(--primary-dark);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px; height: 50px;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 1000;
+    transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
+    opacity: 0; visibility: hidden;
+  }
+  #topBtn.visible { opacity: 1; visibility: visible; }
+  #topBtn:hover { background-color: var(--primary-hover); transform: translateY(-3px); }
+  
+  .site-footer {
+    background-color: var(--primary-dark);
+    color: var(--text-light);
+    padding: 2.5rem 0 1.5rem;
+    margin-top: auto;
+  }
+  .site-footer hr { margin: 1rem 0; border-top: 1px solid rgba(255, 255, 255, 0.2); }
+  .site-footer a { color: rgba(255, 255, 255, 0.8); text-decoration: none; transition: color 0.3s ease, text-decoration 0.3s ease; }
+  .site-footer a:hover { color: var(--text-light); text-decoration: underline; }
+  .site-footer h5 { font-weight: bold; margin-bottom: 1.25rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--accent-color); display: inline-block; }
+  .site-footer .social-icon-hover { transition: transform 0.3s ease, color 0.3s ease; }
+  .site-footer .social-icon-hover:hover { transform: translateY(-5px) scale(1.1); color: var(--text-light) !important; }
 
-      .product-section {
-        padding: 80px 0;
-        position: relative;
-        z-index: 1;
-      }
-      
-      .splide__slide { padding: 10px; }
-      .card {
-        background-color: var(--card-bg);
-        border: none;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border-radius: 1rem;
-        overflow: hidden;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        opacity: 0;
-        transform: translateY(30px);
-      }
+  .cart-item { display: flex; align-items: center; margin-bottom: 1rem; }
+  .cart-item img { width: 60px; height: 60px; object-fit: contain; margin-right: 1rem; background-color: white; border-radius: 8px; }
+  .cart-item-details { flex-grow: 1; }
+  .cart-item-details .name { font-weight: bold; }
+  .cart-item-details .price { color: #555; font-size: 0.9rem; }
+  .cart-item .btn-remove-item { background: none; border: none; color: #dc3545; font-size: 1.2rem; padding: 0 5px; cursor: pointer; }
 
-      .card.visible { opacity: 1; transform: translateY(0); transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
-      .card:hover { transform: translateY(-8px); box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25); }
-      .card-img-top { height: 200px; object-fit: contain; padding: 10px; background-color: #fff; cursor: pointer; }
-      .card-body { padding: 1.25rem; text-align: center; display: flex; flex-direction: column; flex-grow: 1; }
-      .card-title { font-weight: bold; min-height: 48px; cursor: pointer; }
-      .card-text-price { font-size: 1.2rem; font-weight: 600; color: var(--primary-dark); margin-top: auto; padding-top: 1rem; }
-      
-      .card-action-buttons { margin-top: 1rem; }
-
-      /* CAMBIO: Botón "Agregar al carrito" ahora usa el color de acento */
-      .add-to-cart-btn {
-        background-color: var(--accent-color);
-        border-color: var(--accent-color);
-        transition: background-color 0.2s ease;
-      }
-      .add-to-cart-btn:hover {
-        background-color: var(--accent-hover);
-        border-color: var(--accent-hover);
-      }
-      
-      .splide__arrow { background: var(--primary-dark); opacity: 0.8; }
-      .splide__arrow svg { fill: var(--text-light); }
-      .splide__arrow:hover { background: var(--primary-hover); opacity: 1; }
-      .splide__pagination__page.is-active { background: var(--primary-dark); }
-      
-      .modal-body .carousel-item img { max-height: 450px; object-fit: contain; margin: auto; }
-      #modal-product-details { padding: 1rem; }
-      #modal-product-details p { font-size: 1.1rem; margin-bottom: 0.5rem; }
-      #modal-product-price { font-size: 1.5rem; font-weight: bold; color: var(--primary-dark); text-align: center; margin: 1rem 0; }
-      .modal-footer { justify-content: center; border-top: none; padding-top: 0; }
-      .modal-footer .btn { min-width: 200px; font-size: 1.1rem; }
-
-      #topBtn { position: fixed; bottom: 30px; right: 30px; background-color: var(--primary-dark); color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 20px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 1000; transition: opacity 0.3s, transform 0.3s, visibility 0.3s; opacity: 0; visibility: hidden; }
-      #topBtn.visible { opacity: 1; visibility: visible; }
-      #topBtn:hover { background-color: var(--primary-hover); transform: translateY(-3px); }
-      
-      .site-footer { background-color: var(--primary-dark); color: var(--text-light); padding: 2.5rem 0 1.5rem; margin-top: auto; }
-      .site-footer hr { margin: 1rem 0; border-top: 1px solid rgba(255, 255, 255, 0.2); }
-      .site-footer a { color: rgba(255, 255, 255, 0.8); text-decoration: none; transition: color 0.3s ease, text-decoration 0.3s ease; }
-      .site-footer a:hover { color: var(--text-light); text-decoration: underline; } /* CAMBIO: Subrayado en hover para enlaces del footer */
-      .site-footer h5 { font-weight: bold; margin-bottom: 1.25rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--accent-color); display: inline-block; }
-      .site-footer .social-icon-hover { transition: transform 0.3s ease, color 0.3s ease; }
-      .site-footer .social-icon-hover:hover { transform: translateY(-5px) scale(1.1); color: var(--text-light) !important; }
-
-      .cart-item { display: flex; align-items: center; margin-bottom: 1rem; }
-      .cart-item img { width: 60px; height: 60px; object-fit: contain; margin-right: 1rem; background-color: white; border-radius: 8px; }
-      .cart-item-details { flex-grow: 1; }
-      .cart-item-details .name { font-weight: bold; }
-      .cart-item-details .price { color: #555; font-size: 0.9rem; }
-      .cart-item .btn-remove-item { background: none; border: none; color: #dc3545; font-size: 1.2rem; padding: 0 5px; cursor: pointer; }
-
-      @media (max-width: 768px) {
-        body { background-attachment: scroll; }
-        .bienvenida h1 { font-size: 2.5rem; }
-        .card-img-top { height: 180px; }
-        .card-body .card-title { min-height: auto; }
-        .site-footer { padding: 1.5rem 15px; text-align: center; }
-        .site-footer .text-md-start { text-align: center !important; }
-        .site-footer h5 { font-size: 1.1rem; margin-bottom: 0.75rem; padding-bottom: 0.25rem; }
-        .site-footer p, .site-footer li { font-size: 0.875rem; }
-        .site-footer .mb-4 { margin-bottom: 1.5rem !important; }
-        .site-footer .social-icon-hover .fa-2x { font-size: 1.75rem; }
-      }
-    </style>
+  @media (max-width: 768px) {
+    body { background-attachment: scroll; }
+    .bienvenida h1 { font-size: 2.5rem; }
+    .card-img-top { height: 180px; }
+    .card-body .card-title { min-height: auto; }
+    .site-footer { padding: 1.5rem 15px; text-align: center; }
+    .site-footer .text-md-start { text-align: center !important; }
+    .site-footer h5 { font-size: 1.1rem; margin-bottom: 0.75rem; padding-bottom: 0.25rem; }
+    .site-footer p, .site-footer li { font-size: 0.875rem; }
+    .site-footer .mb-4 { margin-bottom: 1.5rem !important; }
+    .site-footer .social-icon-hover .fa-2x { font-size: 1.75rem; }
+  }
+</style>
 </head>
 <body>
     <nav id="navbar" class="navbar navbar-expand-lg navbar-dark">
@@ -309,25 +308,6 @@
                     </div>
                 </li>
 
-                <li class="splide__slide">
-                    <div class="card" 
-                        data-product-id="s5" data-product-name="Samsung Galaxy S25 - 256Gb" data-product-price="1050.00" data-product-currency="USD"
-                        data-product-img="https://image-us.samsung.com/us/smartphones/galaxy-s24/images/galaxy-s24-highlights-color-finish-violet.jpg"
-                        data-product-details="<li>Procesador Snapdragon de última generación</li><li>Pantalla Dynamic AMOLED 2X</li><li>Galaxy AI integrado</li><li>Cámara Pro-Grade de 50MP</li>"
-                        data-product-images='["https://image-us.samsung.com/us/smartphones/galaxy-s24/images/galaxy-s24-highlights-color-finish-violet.jpg"]'
-                        data-action-type="paypal">
-                      <img src="https://image-us.samsung.com/us/smartphones/galaxy-s24/images/galaxy-s24-highlights-color-finish-violet.jpg" class="card-img-top" alt="Samsung Galaxy S25">
-                      <div class="card-body">
-                        <h5 class="card-title">Samsung Galaxy S25 - 256Gb</h5>
-                        <p class="card-text-price">$1,050 USD</p>
-                        <div class="card-action-buttons d-grid gap-2">
-                            <button class="btn btn-primary add-to-cart-btn">Agregar al Carrito</button>
-                            <a href="https://wa.me/59899884367?text=Hola,%20tengo%20una%20consulta%20sobre%20el%20Samsung%20Galaxy%20S25" target="_blank" class="btn btn-outline-success"><i class="fab fa-whatsapp me-1"></i> Hacer una consulta</a>
-                        </div>
-                      </div>
-                    </div>
-                </li>
-
               </ul>
             </div>
           </div>
@@ -382,11 +362,11 @@
                 <li class="splide__slide">
                     <div class="card" 
                         data-product-id="u4" data-product-name="iPhone 14 - 128Gb" data-product-price="24000.00" data-product-currency="UYU"
-                        data-product-img="https://www.apple.com/newsroom/images/product/iphone/standard/Apple-iPhone-14-iPhone-14-Plus-hero-220907_Full-Bleed-Image.jpg.og.jpg"
+                        data-product-img="https://www.iplace.com.uy/ccstore/v1/images/?source=/file/v750326862317701829/products/100002384.00-apple-iphone-14-512gb-azul-mpxn3be-a.jpg&quality=0.8&outputFormat=JPEG"
                         data-product-details="<li><b>Condición Batería:</b> 95%</li><li>Impecable, como nuevo</li><li>Caja y cable originales</li>"
-                        data-product-images='["https://www.apple.com/newsroom/images/product/iphone/standard/Apple-iPhone-14-iPhone-14-Plus-hero-220907_Full-Bleed-Image.jpg.og.jpg"]'
+                        data-product-images='["https://www.iplace.com.uy/ccstore/v1/images/?source=/file/v750326862317701829/products/100002384.00-apple-iphone-14-512gb-azul-mpxn3be-a.jpg&quality=0.8&outputFormat=JPEG"]'
                         data-action-type="whatsapp">
-                      <img src="https://www.apple.com/newsroom/images/product/iphone/standard/Apple-iPhone-14-iPhone-14-Plus-hero-220907_Full-Bleed-Image.jpg.og.jpg" class="card-img-top" alt="iPhone 14">
+                      <img src="https://www.iplace.com.uy/ccstore/v1/images/?source=/file/v750326862317701829/products/100002384.00-apple-iphone-14-512gb-azul-mpxn3be-a.jpg&quality=0.8&outputFormat=JPEG" class="card-img-top" alt="iPhone 14">
                       <div class="card-body">
                         <h5 class="card-title">iPhone 14 - 128Gb</h5>
                         <p class="card-text-price">$24.000 UYU</p>
@@ -410,25 +390,6 @@
             <div class="splide" id="accessories-carousel" aria-label="Accesorios">
               <div class="splide__track">
                 <ul class="splide__list">
-                  
-                  <li class="splide__slide">
-                    <div class="card" 
-                        data-product-id="a1" data-product-name="Apple Watch SE" data-product-price="299.00" data-product-currency="USD"
-                        data-product-img="https://www.apple.com/v/apple-watch-se/n/images/overview/hero/hero__f1k2fwp3i2gi_large.jpg"
-                        data-product-details="<li>GPS, Notificaciones de frecuencia cardíaca</li><li>Detección de Caídas y Emergencia SOS</li><li>Resistente al agua</li>"
-                        data-product-images='["https://www.apple.com/v/apple-watch-se/n/images/overview/hero/hero__f1k2fwp3i2gi_large.jpg"]'
-                        data-action-type="paypal">
-                      <img src="https://www.apple.com/v/apple-watch-se/n/images/overview/hero/hero__f1k2fwp3i2gi_large.jpg" class="card-img-top" alt="Apple Watch SE">
-                      <div class="card-body">
-                        <h5 class="card-title">Apple Watch SE</h5>
-                        <p class="card-text-price">$299 USD</p>
-                        <div class="card-action-buttons d-grid gap-2">
-                          <button class="btn btn-primary add-to-cart-btn">Agregar al Carrito</button>
-                          <a href="https://wa.me/59899884367?text=Hola,%20tengo%20una%20consulta%20sobre%20el%20Apple%20Watch%20SE" target="_blank" class="btn btn-outline-success"><i class="fab fa-whatsapp me-1"></i> Hacer una consulta</a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
                   
                   <li class="splide__slide">
                     <div class="card" 
